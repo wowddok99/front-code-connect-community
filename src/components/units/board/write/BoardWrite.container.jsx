@@ -2,7 +2,7 @@ import BoardWriterUI from './BoardWrite.presenter'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Address } from 'react-daum-postcode'
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 
 export default function BoardWriter(props){
     const router = useRouter();
@@ -25,7 +25,8 @@ export default function BoardWriter(props){
     };
 
     // Mutation
-    const createMutation = useMutation(createPost, {
+    const createMutation = useMutation({
+        mutationFn: createPost, // mutationFn으로 변경
         onSuccess: () => {
             console.log('게시글이 성공적으로 작성되었습니다.');
         },
