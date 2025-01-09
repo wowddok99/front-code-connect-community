@@ -53,23 +53,23 @@ export default function BoardWriterUI(props) {
                             <InputWrapper>
                                 <Label>작성자</Label>
                                 <Writer type ="text" placeholder="이름을 입력해주세요." onInput={props.onInputWriter}></Writer>
-                                <Error></Error>
+                                <Error>{props.writerError}</Error>
                             </InputWrapper>
                             <InputWrapper>
                                 <Label>패스워드</Label>
-                                <Password type="Password" placeholder ="패스워드를 입력해주세요."></Password>
-                                <Error></Error>
+                                <Password type="Password" placeholder ="패스워드를 입력해주세요." onInput={props.onInputPassword}></Password>
+                                <Error>{props.passwordError}</Error>
                             </InputWrapper>
                         </WriterPasswordWrapper>
                         <SubjectWrapper>
                             <Label>제목</Label>
-                            <Subject type="text" placeholder="제목을 입력해주세요."></Subject>
-                            <Error></Error>
+                            <Subject type="text" placeholder="제목을 입력해주세요." onInput={props.onInputTitle}></Subject>
+                            <Error>{props.titleError}</Error>
                         </SubjectWrapper>
                         <ContentWrapper>
                             <Label>내용</Label>
-                            <Content type="text" placeholder="내용을 입력해주세요."></Content>
-                            <Error></Error>
+                            <Content type="text" placeholder="내용을 입력해주세요." onInput={props.onInputContents}></Content>
+                            <Error>{props.contentsError}</Error>
                         </ContentWrapper>
                         <AddressWrapper>                      
                             <ZipcodeWrapper>
@@ -81,7 +81,7 @@ export default function BoardWriterUI(props) {
                         </AddressWrapper>
                         <YoutubeWrapper>
                             <Label>유튜브</Label>
-                            <Youtube type="text" placeholder="유튜브 영상 URL을 입력해주세요."></Youtube>
+                            <Youtube type="text" placeholder="유튜브 영상 URL을 입력해주세요." onInput={props.onInputYoutubeUrl}></Youtube>
                         </YoutubeWrapper>
                         <ImageUploadWrapper>
                             <Label>사진 첨부</Label>
@@ -101,7 +101,9 @@ export default function BoardWriterUI(props) {
                             </MainOptionRadioWrapper>
                         </MainOptionWrapper> */}
                         <SubmitButtonWrapper>
-                            <SubmitButton>등록</SubmitButton>
+                            <SubmitButton isActive={props.isEdit ? true : props.isActive} onClick={props.onClickSubmit}>
+                                {props.isEdit ? "수정하기" : "등록하기"}
+                            </SubmitButton>
                         </SubmitButtonWrapper>
                     </CardMainWrapper>
                 </CardWrapper>

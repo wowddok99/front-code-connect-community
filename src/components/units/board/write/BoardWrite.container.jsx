@@ -1,10 +1,38 @@
 import BoardWriterUI from './BoardWrite.presenter'
-import { ChangeEvent, useEffect, useRef, useState } from 'react' 
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Address } from 'react-daum-postcode'
+import { useMutation } from "react-query";
 
 export default function BoardWriter(props){
     const router = useRouter();
+
+    // API 요청 함수
+    const createPost = async (newPost) => {
+        const response = await fetch(`http://localhost:8081/api/posts/${router.query.categoryName}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newPost),
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        return response.json();
+    };
+
+    // Mutation
+    const createMutation = useMutation(createPost, {
+        onSuccess: () => {
+            console.log('게시글이 성공적으로 작성되었습니다.');
+        },
+        onError: (error) => {
+            console.error('게시글 작성 오류:', error);
+        },
+    });
 
     // State Variables
     const [isActive, setIsActive] = useState(false);
@@ -21,6 +49,7 @@ export default function BoardWriter(props){
     // Event Handlers(Input Handlers)
     const onInputWriter = (event) => {
         setWriter(event.target.value);
+
         // 값 입력시 error 초기화
         if(event.target.value !== ""){
           setWriterError("");
@@ -80,10 +109,53 @@ export default function BoardWriter(props){
         setYoutubeUrl(event.target.value);
     }
 
+    const onClickSubmit = () => {
+        // writer에 값이 없으면 WriterError에 에러원인 저장
+        if(!writer){
+            setWriterError("작성자를 입력해주세요.");
+        }
+        if (!password) {
+            setPasswordError("비밀번호를 입력해주세요.");
+        }
+        if (!title) {
+            setTitleError("제목을 입력해주세요.");
+        }
+        if (!contents) {
+            setContentsError("내용을 입력해주세요.");
+        }
+
+        const newPost = {
+            writer,
+            password,
+            title,
+            contents,
+            youtubeUrl
+        };
+
+        if (writer && password && title && contents) {
+            try {
+                createMutation.mutate(newPost);
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+    };
+
     return (
         <div>
             <BoardWriterUI
+            isActive={isActive}
+            isEdit={props.isEdit}
+            writerError={writerError}
+            passwordError={passwordError}
+            titleError={titleError}
+            contentsError={contentsError}
             onInputWriter={onInputWriter}
+            onInputPassword={onInputPassword}
+            onInputTitle={onInputTitle}
+            onInputContents={onInputContents}
+            onInputYoutubeUrl={onInputYoutubeUrl}
+            onClickSubmit={onClickSubmit}
             />
         </div>
     )

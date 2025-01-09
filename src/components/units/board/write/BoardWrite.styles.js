@@ -196,7 +196,7 @@ export const SubmitButtonWrapper = styled.div`
 `
 
 export const SubmitButton = styled.button`
-    background-color: #FFD600;
+    background-color: ${(props) => props.isActive === true ? "#FFD600" : ""};
     width: 11.1875rem;
     height: 3.25rem;
     border: none;
