@@ -40,7 +40,7 @@ import {
 import { Modal } from "antd"
 import DaumPostcodeEmbed from "react-daum-postcode"
 
-export default function BoardWriterUI() {
+export default function BoardWriterUI(props) {
     return (
         <PageLayout>
             <MainWrapper>
@@ -52,7 +52,7 @@ export default function BoardWriterUI() {
                         <WriterPasswordWrapper>
                             <InputWrapper>
                                 <Label>작성자</Label>
-                                <Writer type ="text" placeholder="이름을 입력해주세요."></Writer>
+                                <Writer type ="text" placeholder="이름을 입력해주세요." onInput={props.onInputWriter}></Writer>
                                 <Error></Error>
                             </InputWrapper>
                             <InputWrapper>
@@ -101,7 +101,7 @@ export default function BoardWriterUI() {
                             </MainOptionRadioWrapper>
                         </MainOptionWrapper> */}
                         <SubmitButtonWrapper>
-                            <SubmitButton></SubmitButton>
+                            <SubmitButton>등록</SubmitButton>
                         </SubmitButtonWrapper>
                     </CardMainWrapper>
                 </CardWrapper>
