@@ -79,10 +79,6 @@ export default function BoardWriter(props){
     const onInputYoutubeUrl = (event) => {
         setYoutubeUrl(event.target.value);
     }
-    
-    const onInputAddressDetail = (event) => {
-        setAddressDetail(event.target.value);
-    }
 
     return (
         <div>
