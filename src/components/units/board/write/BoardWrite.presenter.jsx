@@ -91,20 +91,10 @@ export default function BoardWriterUI(props) {
                         <ImageUploadWrapper>
                             <Label>사진 첨부</Label>
                             <ImageInputWrapper>
-                                <input type ="file" multiple={true} style={{ display: 'none' }} accept="image/jpeg,image/png"/>
-                                <RiImageAddLineIcon>+<br/>upload</RiImageAddLineIcon>
+                                <input type ="file" onChange={props.onChangeImageFile} multiple={false} style={{ display: 'none' }} ref={props.imageFileRef} accept="image/jpeg,image/png"/>
+                                <RiImageAddLineIcon onClick={props.onOpenHiddenImageFileInput}>+<br/>upload</RiImageAddLineIcon>
                             </ImageInputWrapper>
                         </ImageUploadWrapper>
-                        {/* <MainOptionWrapper>
-                            <MainOptionRadioWrapper>
-                                <MainOptionRadioButton type="radio" name="MainOption" id="youtube"></MainOptionRadioButton>
-                                <label>유튜브</label>
-                            </MainOptionRadioWrapper>
-                            <MainOptionRadioWrapper>
-                                <MainOptionRadioButton type="radio" name="MainOption" id="image"></MainOptionRadioButton>
-                                <label>사진</label>
-                            </MainOptionRadioWrapper>
-                        </MainOptionWrapper> */}
                         <SubmitButtonWrapper>
                             <SubmitButton isActive={props.isEdit ? true : props.isActive} onClick={props.onClickSubmit}>
                                 {props.isEdit ? "수정하기" : "등록하기"}
