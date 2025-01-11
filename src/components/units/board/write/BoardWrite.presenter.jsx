@@ -71,13 +71,18 @@ export default function BoardWriterUI(props) {
                             <Content type="text" placeholder="내용을 입력해주세요." onInput={props.onInputContents}></Content>
                             <Error>{props.contentsError}</Error>
                         </ContentWrapper>
-                        <AddressWrapper>                      
+                        <AddressWrapper>
+                            {props.isModalOpen && (
+                                <Modal title="주소 검색" open={true} onOk={props.onToggleModal} onCancel={props.onToggleModal} cancelText={"취소"} okText={"확인"}>
+                                    <DaumPostcodeEmbed onComplete={props.onCompleteDaumPostcode}/>
+                                </Modal>
+                            )}
                             <ZipcodeWrapper>
-                                <ZipCode placeholder={"우편번호"} disabled={true}></ZipCode>
-                                <SearchButton>우편번호 검색</SearchButton>
+                                <ZipCode placeholder={"우편번호"} disabled={true} value={props.zipcode}></ZipCode>
+                                <SearchButton onClick={props.onToggleModal}>우편번호 검색</SearchButton>
                             </ZipcodeWrapper>
-                            <Address placeholder={"주소를 입력해주세요."} disabled={true}></Address>
-                            <Address placeholder={"상세주소를 입력해주세요."}></Address>
+                            <Address placeholder={"주소를 입력해주세요."} disabled={true} value={props.address}></Address>
+                            <Address placeholder={"상세주소를 입력해주세요."} onInput={props.onInputAddressDetail} value={props.addressDetail}></Address>
                         </AddressWrapper>
                         <YoutubeWrapper>
                             <Label>유튜브</Label>

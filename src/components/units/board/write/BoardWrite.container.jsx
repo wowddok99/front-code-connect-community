@@ -37,15 +37,19 @@ export default function BoardWriter(props){
 
     // State Variables
     const [isActive, setIsActive] = useState(false);
-    const [writer, setWriter] = useState();
-    const [password, setPassword] = useState();
-    const [title, setTitle] = useState();
-    const [contents, setContents] = useState();
-    const [youtubeUrl, setYoutubeUrl] = useState();
+    const [writer, setWriter] = useState("");
+    const [password, setPassword] = useState("");
+    const [title, setTitle] = useState("");
+    const [contents, setContents] = useState("");
+    const [youtubeUrl, setYoutubeUrl] = useState("");
     const [writerError, setWriterError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [titleError, setTitleError] = useState("");
     const [contentsError, setContentsError] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [zipcode, setZipcode] = useState("");
+    const [address, setAddress] = useState("");
+    const [addressDetail, setAddressDetail] = useState("");
 
     // Event Handlers(Input Handlers)
     const onInputWriter = (event) => {
@@ -110,6 +114,11 @@ export default function BoardWriter(props){
         setYoutubeUrl(event.target.value);
     }
 
+    const onInputAddressDetail = (event) => {
+        setAddressDetail(event.target.value);
+    }
+
+    // Event Handlers(Click Handlers)
     const onClickSubmit = () => {
         // writer에 값이 없으면 WriterError에 에러원인 저장
         if(!writer){
@@ -130,33 +139,68 @@ export default function BoardWriter(props){
             password,
             title,
             contents,
-            youtubeUrl
+            youtubeUrl,
+            postAddress: {
+                zipcode: zipcode,
+                address: address,
+                addressDetail: addressDetail
+            }
         };
 
         if (writer && password && title && contents) {
             try {
-                createMutation.mutate(newPost);
+                createMutation.mutate(newPost, {
+                    onSuccess: () => {
+                        alert("게시물이 성공적으로 등록되었습니다.");
+                    },
+                    onError: (error) => {
+                        alert(error.message);
+                    }
+                });
             } catch (error) {
                 alert(error.message);
             }
         }
     };
 
+    // Helper Function
+    const onToggleModal = () => {
+        setIsModalOpen((prev) => !prev);
+    };
+
+    const onCompleteDaumPostcode = (data) => {
+        setZipcode(data.zonecode);
+        setAddress(data.address);
+        onToggleModal();
+    }
+
     return (
         <div>
             <BoardWriterUI
             isActive={isActive}
             isEdit={props.isEdit}
+            isModalOpen={isModalOpen}
+
             writerError={writerError}
             passwordError={passwordError}
             titleError={titleError}
             contentsError={contentsError}
+
+            zipcode={zipcode}
+            address={address}
+            addressDetail={addressDetail}
+
             onInputWriter={onInputWriter}
             onInputPassword={onInputPassword}
             onInputTitle={onInputTitle}
             onInputContents={onInputContents}
             onInputYoutubeUrl={onInputYoutubeUrl}
+            onInputAddressDetail={onInputAddressDetail}
+
             onClickSubmit={onClickSubmit}
+
+            onToggleModal={onToggleModal}
+            onCompleteDaumPostcode={onCompleteDaumPostcode}
             />
         </div>
     )
