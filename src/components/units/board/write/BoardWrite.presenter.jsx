@@ -93,6 +93,13 @@ export default function BoardWriterUI(props) {
                             <ImageInputWrapper>
                                 <input type ="file" onChange={props.onChangeImageFile} multiple={false} style={{ display: 'none' }} ref={props.imageFileRef} accept="image/jpeg,image/png"/>
                                 <RiImageAddLineIcon onClick={props.onOpenHiddenImageFileInput}>+<br/>upload</RiImageAddLineIcon>
+                                {props.imageFileNames?.map((el, index)=>(
+                                    <ImageFileNameWrapper style={{display: props.imageFileNames ? '' : 'none'}}>
+                                        <ImageFileName
+                                            onClick={() => window.open(`http://localhost:3000/uploads/images/${props.imageFileNames?.[index]}`)}>{props.imageFileNames?.[index]}</ImageFileName>
+                                        <ImageFileDeleteButton onClick={() => props.onClickDeleteImageFile(index)}/>
+                                    </ImageFileNameWrapper>
+                                ))}
                             </ImageInputWrapper>
                         </ImageUploadWrapper>
                         <SubmitButtonWrapper>

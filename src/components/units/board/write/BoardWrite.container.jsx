@@ -2,6 +2,7 @@ import BoardWriterUI from './BoardWrite.presenter'
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useMutation } from "@tanstack/react-query";
+import {checkValidationImageFile} from "@/src/components/units/commons/libraries/validationFile";
 
 export default function BoardWriter(props){
     const router = useRouter();
@@ -167,7 +168,8 @@ export default function BoardWriter(props){
                 zipcode: zipcode,
                 address: address,
                 addressDetail: addressDetail
-            }
+            },
+            imagePathList : [...imageFileUrls]
         };
 
         if (writer && password && title && contents) {
@@ -175,6 +177,7 @@ export default function BoardWriter(props){
                 createMutation.mutate(newPost, {
                     onSuccess: () => {
                         alert("게시물이 성공적으로 등록되었습니다.");
+                        console.log(newPost);
                     },
                     onError: (error) => {
                         alert(error.message);
@@ -197,6 +200,11 @@ export default function BoardWriter(props){
         }
 
         const file = event.target.files[0];
+
+        // isValid가 false이면 return 실행
+        const isImageFileValid = checkValidationImageFile(file);
+        if (!isImageFileValid) return;
+
         const formData = new FormData();
 
         formData.append('files', file);
@@ -237,6 +245,17 @@ export default function BoardWriter(props){
         imageFileRef.current?.click();
     }
 
+    const onClickDeleteImageFile = (index) => {
+        const newImageFileUrls = [...imageFileUrls]
+        const newImageFileNames = [...imageFileNames]
+
+        newImageFileUrls.splice(index, 1)
+        newImageFileNames.splice(index, 1)
+
+        setImageFileUrls(newImageFileUrls)
+        setImageFileNames(newImageFileNames);
+    }
+
     return (
         <div>
             <BoardWriterUI
@@ -254,6 +273,8 @@ export default function BoardWriter(props){
             addressDetail={addressDetail}
 
             imageFileRef={imageFileRef}
+            imageFileUrls={imageFileUrls}
+            imageFileNames={imageFileNames}
 
             onInputWriter={onInputWriter}
             onInputPassword={onInputPassword}
@@ -269,6 +290,7 @@ export default function BoardWriter(props){
             onToggleModal={onToggleModal}
             onCompleteDaumPostcode={onCompleteDaumPostcode}
             onOpenHiddenImageFileInput={onOpenHiddenImageFileInput}
+            onClickDeleteImageFile={onClickDeleteImageFile}
             />
         </div>
     )
