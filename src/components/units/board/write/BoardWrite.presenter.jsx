@@ -91,20 +91,17 @@ export default function BoardWriterUI(props) {
                         <ImageUploadWrapper>
                             <Label>사진 첨부</Label>
                             <ImageInputWrapper>
-                                <input type ="file" multiple={true} style={{ display: 'none' }} accept="image/jpeg,image/png"/>
-                                <RiImageAddLineIcon>+<br/>upload</RiImageAddLineIcon>
+                                <input type ="file" onChange={props.onChangeImageFile} multiple={false} style={{ display: 'none' }} ref={props.imageFileRef} accept="image/jpeg,image/png"/>
+                                <RiImageAddLineIcon onClick={props.onOpenHiddenImageFileInput}>+<br/>upload</RiImageAddLineIcon>
+                                {props.imageFileNames?.map((el, index)=>(
+                                    <ImageFileNameWrapper style={{display: props.imageFileNames ? '' : 'none'}}>
+                                        <ImageFileName
+                                            onClick={() => window.open(`http://localhost:3000/uploads/images/${props.imageFileNames?.[index]}`)}>{props.imageFileNames?.[index]}</ImageFileName>
+                                        <ImageFileDeleteButton onClick={() => props.onClickDeleteImageFile(index)}/>
+                                    </ImageFileNameWrapper>
+                                ))}
                             </ImageInputWrapper>
                         </ImageUploadWrapper>
-                        {/* <MainOptionWrapper>
-                            <MainOptionRadioWrapper>
-                                <MainOptionRadioButton type="radio" name="MainOption" id="youtube"></MainOptionRadioButton>
-                                <label>유튜브</label>
-                            </MainOptionRadioWrapper>
-                            <MainOptionRadioWrapper>
-                                <MainOptionRadioButton type="radio" name="MainOption" id="image"></MainOptionRadioButton>
-                                <label>사진</label>
-                            </MainOptionRadioWrapper>
-                        </MainOptionWrapper> */}
                         <SubmitButtonWrapper>
                             <SubmitButton isActive={props.isEdit ? true : props.isActive} onClick={props.onClickSubmit}>
                                 {props.isEdit ? "수정하기" : "등록하기"}

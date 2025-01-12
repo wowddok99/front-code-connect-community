@@ -1,8 +1,8 @@
 import BoardWriterUI from './BoardWrite.presenter'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Address } from 'react-daum-postcode'
 import { useMutation } from "@tanstack/react-query";
+import {checkValidationImageFile} from "@/src/components/units/commons/libraries/validationFile";
 
 export default function BoardWriter(props){
     const router = useRouter();
@@ -24,6 +24,17 @@ export default function BoardWriter(props){
         return response.json();
     };
 
+    const uploadImages = async (formData) => {
+        const response = await fetch('http://localhost:8081/api/images', {
+            method: 'POST',
+            body: formData,
+        });
+        if (!response.ok) {
+            throw new Error('이미지 업로드에 실패했습니다.');
+        }
+        return response.json();
+    };
+
     // Mutation
     const createMutation = useMutation({
         mutationFn: createPost, // mutationFn으로 변경
@@ -32,6 +43,16 @@ export default function BoardWriter(props){
         },
         onError: (error) => {
             console.error('게시글 작성 오류:', error);
+        },
+    });
+
+    const uploadImagesMutation = useMutation({
+        mutationFn: uploadImages,
+        onSuccess: (data) => {
+            console.log('이미지가 성공적으로 업로드되었습니다.', data);
+        },
+        onError: (error) => {
+            console.error('이미지 업로드 오류:', error);
         },
     });
 
@@ -50,6 +71,9 @@ export default function BoardWriter(props){
     const [zipcode, setZipcode] = useState("");
     const [address, setAddress] = useState("");
     const [addressDetail, setAddressDetail] = useState("");
+    const [imageFileUrls, setImageFileUrls] = useState([]);
+    const [imageFileNames, setImageFileNames] = useState([]);
+    const imageFileRef = useRef(null);
 
     // Event Handlers(Input Handlers)
     const onInputWriter = (event) => {
@@ -144,7 +168,8 @@ export default function BoardWriter(props){
                 zipcode: zipcode,
                 address: address,
                 addressDetail: addressDetail
-            }
+            },
+            imagePathList : [...imageFileUrls]
         };
 
         if (writer && password && title && contents) {
@@ -152,6 +177,7 @@ export default function BoardWriter(props){
                 createMutation.mutate(newPost, {
                     onSuccess: () => {
                         alert("게시물이 성공적으로 등록되었습니다.");
+                        console.log(newPost);
                     },
                     onError: (error) => {
                         alert(error.message);
@@ -163,6 +189,47 @@ export default function BoardWriter(props){
         }
     };
 
+    // Event Handlers(Change Handlers)
+    const onChangeImageFile = (event) => {
+        const newImageFileUrls = [...imageFileUrls];
+        const newImageFileNames = [...imageFileNames];
+
+        if (newImageFileUrls.length >= 3) {
+            alert("이미지는 최대 3개까지만 등록할 수 있습니다.");
+            return;
+        }
+
+        const file = event.target.files[0];
+
+        // isValid가 false이면 return 실행
+        const isImageFileValid = checkValidationImageFile(file);
+        if (!isImageFileValid) return;
+
+        const formData = new FormData();
+
+        formData.append('files', file);
+
+        // 이미지 파일 업로드
+        uploadImagesMutation.mutate(formData, {
+            onSuccess: (response) => {
+                // console.log(response);
+                const fileName = response.data[0].split('\\').pop();
+
+                newImageFileUrls.push(response.data[0]);
+                newImageFileNames.push(fileName);
+
+                console.log(newImageFileUrls);
+                console.log(newImageFileNames);
+
+                setImageFileUrls(newImageFileUrls);
+                setImageFileNames(newImageFileNames);
+            },
+            onError: (error) => {
+                console.error('이미지 업로드 오류:', error);
+            }
+        });
+    };
+
     // Helper Function
     const onToggleModal = () => {
         setIsModalOpen((prev) => !prev);
@@ -172,6 +239,21 @@ export default function BoardWriter(props){
         setZipcode(data.zonecode);
         setAddress(data.address);
         onToggleModal();
+    }
+
+    const onOpenHiddenImageFileInput = () => {
+        imageFileRef.current?.click();
+    }
+
+    const onClickDeleteImageFile = (index) => {
+        const newImageFileUrls = [...imageFileUrls]
+        const newImageFileNames = [...imageFileNames]
+
+        newImageFileUrls.splice(index, 1)
+        newImageFileNames.splice(index, 1)
+
+        setImageFileUrls(newImageFileUrls)
+        setImageFileNames(newImageFileNames);
     }
 
     return (
@@ -190,6 +272,10 @@ export default function BoardWriter(props){
             address={address}
             addressDetail={addressDetail}
 
+            imageFileRef={imageFileRef}
+            imageFileUrls={imageFileUrls}
+            imageFileNames={imageFileNames}
+
             onInputWriter={onInputWriter}
             onInputPassword={onInputPassword}
             onInputTitle={onInputTitle}
@@ -199,8 +285,12 @@ export default function BoardWriter(props){
 
             onClickSubmit={onClickSubmit}
 
+            onChangeImageFile={onChangeImageFile}
+
             onToggleModal={onToggleModal}
             onCompleteDaumPostcode={onCompleteDaumPostcode}
+            onOpenHiddenImageFileInput={onOpenHiddenImageFileInput}
+            onClickDeleteImageFile={onClickDeleteImageFile}
             />
         </div>
     )
