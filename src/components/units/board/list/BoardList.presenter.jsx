@@ -26,7 +26,7 @@ import {
     DummyWrapper
 } from "./BoardList.styles"
 
-export default function BoardListUI(){
+export default function BoardListUI(props){
     return (
         <PageLayout>
             <MainWrapper>
@@ -48,6 +48,14 @@ export default function BoardListUI(){
                         <ColumnHeaderWriter>작성자</ColumnHeaderWriter>
                         <ColumnHeaderDate>날짜</ColumnHeaderDate>
                     </Row>
+                    {props.fetchPostsData?.data?.posts.map((el) => (
+                        <Row key={el.id}>
+                            <ColumnId>{el.id}</ColumnId>
+                            <ColumnTitle>{el.title}</ColumnTitle>
+                            <ColumnWriter>{el.writer}</ColumnWriter>
+                            <ColumnDate>{el.createdAt.substring(0, 10)}</ColumnDate>
+                        </Row>
+                    ))}
                     <TableBottom/>
                 </TableWrapper>
                 <FooterWrapper>
@@ -55,7 +63,7 @@ export default function BoardListUI(){
                     {/* 페이지네이션 추가 필요 */}
                     <SubmitButtonWrapper>
                         <PencilIcon/>
-                        <SubmitButton>등록하기</SubmitButton>
+                        <SubmitButton onClick={props.onClickMoveToWritePage}>등록하기</SubmitButton>
                     </SubmitButtonWrapper>
                 </FooterWrapper>
             </MainWrapper>
