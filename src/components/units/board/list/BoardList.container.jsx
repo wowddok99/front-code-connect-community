@@ -1,11 +1,10 @@
 import { useRouter } from "next/router"
 import BoardListUI from "./BoardList.presenter"
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 
 export default function BoardList(){
     const router = useRouter();
-    const { pageNumber, categoryName } = router.query;
+    const { categoryName, pageNumber } = router.query;
 
     // API 요청 함수
     const fetchPosts = async () => {
@@ -18,7 +17,7 @@ export default function BoardList(){
 
     // UseQuery
     const { data: fetchPostsData, error, isLoading } = useQuery({
-        queryKey: ['fetchPostsData'],
+        queryKey: ['fetchPostsData', categoryName, pageNumber],
         queryFn: fetchPosts,
         enabled: !!categoryName && !!pageNumber
     });
@@ -28,11 +27,18 @@ export default function BoardList(){
         router.push(`/boards/write/${categoryName}`);
     }
 
+    const onClickMoveToDetailPage = (el) => {
+        router.push(`/boards/detail/${el.id}`);
+    }
+
     return (
         <div>
             <BoardListUI
             fetchPostsData={fetchPostsData}
+
             onClickMoveToWritePage={onClickMoveToWritePage}
+            onClickMoveToDetailPage={onClickMoveToDetailPage}
+            // refetch={refetch}
             />
         </div>
     )
