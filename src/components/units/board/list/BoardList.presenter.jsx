@@ -1,4 +1,5 @@
-import { 
+import Pagination from "../../commons/pagination/Pagination.container"
+import {
     PageLayout,
     MainWrapper,
     SearchWrapper,
@@ -49,7 +50,7 @@ export default function BoardListUI(props){
                         <ColumnHeaderDate>날짜</ColumnHeaderDate>
                     </Row>
                     {props.fetchPostsData?.data?.posts.map((el) => (
-                        <Row key={el.id}>
+                        <Row key={el.id} onClick={(event) => props.onClickMoveToDetailPage(el)}>
                             <ColumnId>{el.id}</ColumnId>
                             <ColumnTitle>{el.title}</ColumnTitle>
                             <ColumnWriter>{el.writer}</ColumnWriter>
@@ -60,7 +61,7 @@ export default function BoardListUI(props){
                 </TableWrapper>
                 <FooterWrapper>
                     <DummyWrapper/>
-                    {/* 페이지네이션 추가 필요 */}
+                    <Pagination fetchPostsData={props.fetchPostsData}/>
                     <SubmitButtonWrapper>
                         <PencilIcon/>
                         <SubmitButton onClick={props.onClickMoveToWritePage}>등록하기</SubmitButton>
