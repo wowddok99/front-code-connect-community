@@ -38,7 +38,6 @@ export default function BoardList(){
 
             onClickMoveToWritePage={onClickMoveToWritePage}
             onClickMoveToDetailPage={onClickMoveToDetailPage}
-            // refetch={refetch}
             />
         </div>
     )
