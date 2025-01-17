@@ -18,7 +18,7 @@ export default function BoardWriter(props){
         });
 
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('네트워크 응답이 올바르지 않습니다.');
         }
 
         return response.json();
@@ -38,12 +38,8 @@ export default function BoardWriter(props){
     // Mutation
     const createMutation = useMutation({
         mutationFn: createPost, // mutationFn으로 변경
-        onSuccess: () => {
-            console.log('게시글이 성공적으로 작성되었습니다.');
-        },
-        onError: (error) => {
-            console.error('게시글 작성 오류:', error);
-        },
+        onSuccess: () => {},
+        onError: (error) => {},
     });
 
     const uploadImagesMutation = useMutation({
@@ -177,7 +173,7 @@ export default function BoardWriter(props){
                 createMutation.mutate(newPost, {
                     onSuccess: () => {
                         alert("게시물이 성공적으로 등록되었습니다.");
-                        console.log(newPost);
+                        router.push(`http://localhost:3000/boards/list/${router.query.categoryName}/1`)
                     },
                     onError: (error) => {
                         alert(error.message);
