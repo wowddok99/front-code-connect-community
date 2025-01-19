@@ -30,27 +30,29 @@ export default function BoardList(){
 
     // API 요청 함수
     const fetchPosts = async () => {
+        // 백엔드의 startDate와 endDate는 LocalDateTime 타입이므로 형식을 변환
+        const formattedStartDate = startDate === "" || startDate === undefined ? "" : `${startDate}T00:00:00`;
+        const formattedEndDate = endDate === "" || endDate === undefined ? "" : `${endDate}T23:59:59`;
+
         const response = await fetch(
             `http://localhost:8081/api/posts/${categoryName}?` +
             `page=${pageNumber}&` +
             `size=10&` +
             `sort=createdAt,desc&` +
             `title=${encodeURIComponent(title)}&` +
-            `startDate=${startDate}&` +
-            `endDate=${endDate}`
+            `startDate=${formattedStartDate}&` +
+            `endDate=${formattedEndDate}`
         );
 
-        console.log(response);
-
         if (!response.ok) {
-            alert('네트워크 응답이 올바르지 않습니다.');
+            alert('API 응답이 올바르지 않습니다.');
         }
         return response.json();
     };
 
     // UseQuery
-    const { data: fetchPostsData, error, isLoading } = useQuery({
-        queryKey: ['fetchPostsData', categoryName, pageNumber],
+    const { data: fetchPostsData, error, isLoading, refetch} = useQuery({
+        queryKey: ['fetchPostsData', categoryName, pageNumber, title, startDate, endDate],
         queryFn: fetchPosts,
         enabled: !!categoryName && !!pageNumber
     });
@@ -62,11 +64,12 @@ export default function BoardList(){
 
     const inputStartDateHandler = (event) => {
         const selectedDate = event.target.value; // YYYY-MM-DD 형식의 날짜 문자열
-        setInputStartDate(new Date(selectedDate + 'T00:00')); // 자정으로 설정
+        setInputStartDate(selectedDate); // 자정으로 설정
     }
 
     const inputEndDateHandler = (event) => {
-        setInputEndDate(event.target.value);
+        const selectedDate = event.target.value; // YYYY-MM-DD 형식의 날짜 문자열
+        setInputEndDate(selectedDate); // 자정으로 설정
     }
 
     // Event Handlers (Click Handlers)
@@ -79,6 +82,7 @@ export default function BoardList(){
     }
 
     const onClickSearchByTitleAndDate = () => {
+        // 입력된 제목, 시작 날짜, 종료 날짜를 상태(state)에 설정
         setTitle(inputTitle);
         setStartDate(inputStartDate);
         setEndDate(inputEndDate);
@@ -90,9 +94,11 @@ export default function BoardList(){
                 currentPage: 1,
                 title: inputTitle,
                 startDate: inputStartDate,
-                endDate: inputEndDate
+                endDate: inputEndDate //
             }
         });
+
+        refetch();
     }
 
     // Helper Function

@@ -26,6 +26,7 @@ export default function Pagination(props){
             pathname: `/boards/list/${categoryName}/${newPage}`,
             query: {
                 title: router.query.title,
+                // 시작 날짜와 종료 날짜가 비어있거나 정의되지 않은 경우 undefined로 설정, 그렇지 않으면 원래 값(startDate or endDate) 유지
                 startDate: router.query.startDate === "" || router.query.startDate === undefined ? undefined : (router.query.startDate),
                 endDate: router.query.endDate === "" || router.query.endDate === undefined ? undefined : (router.query.endDate),
                 startPage: startPage,
