@@ -34,12 +34,12 @@ export default function BoardListUI(props){
                 <SearchWrapper>
                     <SearchInputWrapper>
                         <SearchIcon></SearchIcon>
-                        <SearchInput type="text" placeholder="제목을 검색해주세요."></SearchInput>
+                        <SearchInput type="text" onInput={props.inputTitleHandler} onKeyDown={props.handleKeyDown} value={props.inputTitle} placeholder="제목을 검색해주세요."></SearchInput>
                     </SearchInputWrapper>
-                    <DateInput type="date" placeholder="YYYY-MM-DD" max={"9999-12-31"}></DateInput>
+                    <DateInput type="date" onInput={props.inputStartDateHandler} onKeyDown={props.handleKeyDown} value={props.inputStartDate} placeholder="YYYY-MM-DD" max={"9999-12-31"}></DateInput>
                     ~
-                    <DateInput type="date" placeholder="YYYY-MM-DD" max={"9999-12-31"}></DateInput>
-                    <SearchButton>검색하기</SearchButton>
+                    <DateInput type="date" onInput={props.inputEndDateHandler} onKeyDown={props.handleKeyDown} value={props.inputEndDate} placeholder="YYYY-MM-DD" max={"9999-12-31"}></DateInput>
+                    <SearchButton onClick={props.onClickSearchByTitleAndDate}>검색하기</SearchButton>
                 </SearchWrapper>
                 <TableWrapper>
                     <TableTop/>
