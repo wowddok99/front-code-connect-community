@@ -6,7 +6,6 @@ export default function Pagination(props){
     const router = useRouter();
     const { categoryName } = router.query;
 
-    // useEffect
     useEffect(() => { // router.query의 startPage 및 currentPage의 값이 변하면 상태 업데이트
         setStartPage(Number(router.query.startPage) || 1); // router.query.startPage가 Nan(빈값)이면 1로 저장
         setCurrentPage(Number(router.query.currentPage) || 1);
@@ -23,7 +22,16 @@ export default function Pagination(props){
         const newPage = Number(event.currentTarget.id);
 
         // 페이지 이동
-        router.push(`/boards/list/${categoryName}/${newPage}`);
+        router.push({
+            pathname: `/boards/list/${categoryName}/${newPage}`,
+            query: {
+                title: router.query.title,
+                startDate: router.query.startDate === "" || router.query.startDate === undefined ? undefined : (router.query.startDate),
+                endDate: router.query.endDate === "" || router.query.endDate === undefined ? undefined : (router.query.endDate),
+                startPage: startPage,
+                currentPage: Number(event.currentTarget.id)
+            }
+        });
 
         // 현재 페이지 상태 업데이트
         setCurrentPage(newPage);
@@ -37,7 +45,17 @@ export default function Pagination(props){
         setStartPage(startPage - 10)
         setCurrentPage(Number(startPage - 10));
 
-        router.push(`/boards/list/${categoryName}/${(startPage - 10)}`);
+        // 페이지 이동
+        router.push({
+            pathname: `/boards/list/${categoryName}/${(newPage - 10)}`,
+            query: {
+                title: router.query.title,
+                startDate: router.query.startDate === "" || router.query.startDate === undefined ? undefined : (router.query.startDate),
+                endDate: router.query.endDate === "" || router.query.endDate === undefined ? undefined : (router.query.endDate),
+                startPage: startPage - 10,
+                currentPage: Number(startPage - 10)
+            }
+        });
     }
 
     const onClickMoveToNextPage = () => {
@@ -45,7 +63,17 @@ export default function Pagination(props){
             setStartPage(startPage + 10)
             setCurrentPage(Number(startPage + 10));
 
-            router.push(`/boards/list/${categoryName}/${(startPage + 10)}`);
+            // 페이지 이동
+            router.push({
+                pathname: `/boards/list/${categoryName}/${(newPage + 10)}`,
+                query: {
+                    title: router.query.title,
+                    startDate: router.query.startDate === "" || router.query.startDate === undefined ? undefined : (router.query.startDate),
+                    endDate: router.query.endDate === "" || router.query.endDate === undefined ? undefined : (router.query.endDate),
+                    startPage: startPage + 10,
+                    currentPage: Number(startPage + 10)
+                }
+            });
         }
     }
 
