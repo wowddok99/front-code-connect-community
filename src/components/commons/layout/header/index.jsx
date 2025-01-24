@@ -40,20 +40,17 @@ const Menu = styled.a`
 export default function LayOutHeader(){
     const router = useRouter();
 
-    const { pathname } = router;
-    const isListMenuActive = pathname.includes('/boards/list');
-    
     return (
         <HeaderWrapper>
             <LogoWrapper>
-                <a href="http://localhost:3000/boards/list/1">
+                <a href="http://localhost:3000/">
                     <HeaderLogo src="/images/codeConnect_logo.png"></HeaderLogo>
                 </a>
             </LogoWrapper>
             <MenuWrapper>
-                <Menu onClick={() => alert("준비중입니다.")}>Notice</Menu>
-                <Menu href="http://localhost:3000/boards/list/1">Community</Menu>
-                <Menu onClick={() => alert("준비중입니다.")}>Information</Menu>
+                <Menu href="http://localhost:3000/boards/list/notice/1">Notice</Menu>
+                <Menu href="http://localhost:3000/boards/list/community/1">Community</Menu>
+                <Menu href="http://localhost:3000/boards/list/information/1">Information</Menu>
             </MenuWrapper>
         </HeaderWrapper>
     )

@@ -1,8 +1,12 @@
-import BoardList from "../src/components/units/board/list/BoardList.container"
 export default function BoardsListPage(){
-    return (
-        <div>
-            <BoardList></BoardList>
-        </div>
-    )
+    return null;
+}
+
+export async function getServerSideProps() {
+    return {
+        redirect: {
+            destination: '/boards/list/notice/1',
+            permanent: false
+        },
+    };
 }
