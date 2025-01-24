@@ -28,6 +28,7 @@ import {
     DeleteButton,
     CommentFormWrapper
 } from "./BoardDetail.styles"
+import BoardCommentWrite from "@/src/components/units/board/comment/write/BoardCommentWrite.container";
 
 export default function BoardDetailUI(props){
     return (
@@ -82,6 +83,7 @@ export default function BoardDetailUI(props){
                     <DeleteButton onClick={props.onClickDeletePost}>삭제</DeleteButton>
                 </CrudButtonGroupWrapper>
                 <CommentFormWrapper>
+                    <BoardCommentWrite/>
                     {/* 댓글 추가 필요 */}
                 </CommentFormWrapper>
             </MainWrapper>
