@@ -78,7 +78,7 @@ export default function BoardList(){
     }
 
     const onClickMoveToDetailPage = (el) => {
-        router.push(`/boards/detail/${el.id}`);
+        router.push(`/boards/detail/${categoryName}/${el.id}`);
     }
 
     const onClickSearchByTitleAndDate = () => {
