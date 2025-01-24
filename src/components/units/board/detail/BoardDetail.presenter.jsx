@@ -66,10 +66,12 @@ export default function BoardDetailUI(props){
                         )}
                         <LikeHateButtonWrapper>
                             <LikeButtonWrapper>
-                                <LikeIcon src="/images/ic_thumb_up.png"></LikeIcon>
+                                <LikeIcon src="/images/ic_thumb_up.png" onClick={props.onClickLike}></LikeIcon>
+                                {props.likeCount}
                             </LikeButtonWrapper>
                             <HateButtonWrapper>
-                                <HateIcon src="/images/ic_thumb_down.png"></HateIcon>
+                                <HateIcon src="/images/ic_thumb_down.png" onClick={props.onClickDislike}></HateIcon>
+                                {props.dislikeCount}
                             </HateButtonWrapper>
                         </LikeHateButtonWrapper>
                     </CardMainWrapper>

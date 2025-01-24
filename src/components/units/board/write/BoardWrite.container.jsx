@@ -169,19 +169,15 @@ export default function BoardWriter(props){
         };
 
         if (writer && password && title && contents) {
-            try {
-                createMutation.mutate(newPost, {
-                    onSuccess: () => {
-                        alert("게시물이 성공적으로 등록되었습니다.");
-                        router.push(`http://localhost:3000/boards/list/${router.query.categoryName}/1`)
-                    },
-                    onError: (error) => {
-                        alert(error.message);
-                    }
-                });
-            } catch (error) {
-                alert(error.message);
-            }
+            createMutation.mutate(newPost, {
+                onSuccess: () => {
+                    alert("게시물이 성공적으로 등록되었습니다.");
+                    router.push(`http://localhost:3000/boards/list/${router.query.categoryName}/1`)
+                },
+                onError: (error) => {
+                    alert(error.message);
+                }
+            });
         }
     };
 
@@ -213,9 +209,6 @@ export default function BoardWriter(props){
 
                 newImageFileUrls.push(response.data[0]);
                 newImageFileNames.push(fileName);
-
-                console.log(newImageFileUrls);
-                console.log(newImageFileNames);
 
                 setImageFileUrls(newImageFileUrls);
                 setImageFileNames(newImageFileNames);

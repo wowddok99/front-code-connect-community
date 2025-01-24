@@ -50,14 +50,44 @@ export default function BoardDetail(){
         });
 
         if (!response.ok) {
-            throw new Error('네트워크 응답이 올바르지 않습니다.');
+            throw new Error('API 응답이 올바르지 않습니다.');
         }
 
         return response;
     };
 
+    const likePost = async () => {
+        const response = await fetch(`http://localhost:8081/api/posts/${postId}/likes`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('API 응답이 올바르지 않습니다.');
+        }
+
+        return response.json();
+    };
+
+    const dislikePost = async () => {
+        const response = await fetch(`http://localhost:8081/api/posts/${postId}/dislikes`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('API 응답이 올바르지 않습니다.');
+        }
+
+        return response.json();
+    };
+
     // UseQuery
-    const { data: fetchPostData, error, isLoading } = useQuery({
+    const { data: fetchPostData, error, isLoading, refetch } = useQuery({
         queryKey: ['fetchPostData', categoryName, postId],
         queryFn: fetchPost,
         enabled: !!categoryName && !!postId
@@ -70,12 +100,24 @@ export default function BoardDetail(){
             const fullAddress = `(${fetchPostData.data?.postAddress?.zipcode}) ${fetchPostData.data?.postAddress?.address} ${fetchPostData.data?.postAddress?.addressDetail}`;
             setFullAddress(fullAddress);
         }
-    }, [fetchPostData]); // fetchPostData가 변경될 때마다 실행
+    }, [fetchPostData]);
 
     // Mutation
     const deleteMutation = useMutation({
-        mutationFn: deletePost, // mutationFn으로 deletePost 설정
+        mutationFn: deletePost,
         onSuccess: () => {},
+        onError: (error) => {}
+    });
+
+    const likeMutation = useMutation({
+        mutationFn: (postId) => likePost(postId),
+        onSuccess: (data) => {},
+        onError: (error) => {}
+    });
+
+    const dislikeMutation = useMutation({
+        mutationFn: (postId) => dislikePost(postId),
+        onSuccess: (data) => {},
         onError: (error) => {}
     });
 
@@ -94,16 +136,38 @@ export default function BoardDetail(){
     }
 
     const onClickDeletePost = async() => {
-        try {
-            deleteMutation.mutate(postId,{
-                onSuccess: () => {
-                    alert("게시물이 성공적으로 삭제되었습니다.");
-                    router.push(`/boards/list/${categoryName}/1`);
-                }
-            });
-        } catch (error) {
-            alert(error.message);
-        }
+        deleteMutation.mutate(postId,{
+            onSuccess: () => {
+                alert("게시물이 성공적으로 삭제되었습니다.");
+                router.push(`/boards/list/${categoryName}/1`);
+            },
+            onError: (error) => {
+                alert(error.message);
+            }
+        });
+    }
+
+    const onClickLike = async (postId) => {
+        likeMutation.mutate(postId, {
+            onSuccess: () => {
+                refetch();
+            },
+            onError: (error) => {
+                alert(error.message);
+            }
+        });
+    }
+
+    const onClickDislike = async (postId) => {
+        dislikeMutation.mutate(postId, {
+            onSuccess: () => {
+                refetch();
+
+            },
+            onError: (error) => {
+                alert(error.message);
+            }
+        });
     }
 
     // Helper Functions
@@ -125,6 +189,8 @@ export default function BoardDetail(){
                 onClickMoveToListPage={onClickMoveToListPage}
                 onClickMoveToEditPage={onClickMoveToEditPage}
                 onClickDeletePost={onClickDeletePost}
+                onClickLike={onClickLike}
+                onClickDislike={onClickDislike}
 
                 onErrorYoutubePlayer={onErrorYoutubePlayer}
             />
