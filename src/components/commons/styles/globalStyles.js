@@ -8,12 +8,12 @@ export const globalStyles = css`
 
     @font-face {
         font-family: "NotoSansKR-Bold";
-        src: url("/public/font/NotoSansKR-Bold.ttf");
+        src: url("/font/NotoSansKR-Bold.ttf");
     }
 
     @font-face {
         font-family: "NotoSansKR-ExtraLight";
-        src: url("/public/font/NotoSansKR-ExtraLight.ttf");
+        src: url("/font/NotoSansKR-ExtraLight.ttf");
     }
 
     * {
