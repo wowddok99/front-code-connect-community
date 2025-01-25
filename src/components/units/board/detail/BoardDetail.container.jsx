@@ -178,6 +178,7 @@ export default function BoardDetail(){
         <div>
             <BoardDetailUI
                 fetchPostData={fetchPostData}
+                postId={postId}
 
                 isMounted={isMounted}
                 likeCount={likeCount}
