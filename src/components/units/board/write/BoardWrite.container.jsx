@@ -36,8 +36,8 @@ export default function BoardWriter(props){
     };
 
     // Mutation
-    const createMutation = useMutation({
-        mutationFn: createPost, // mutationFn으로 변경
+    const createPostMutation = useMutation({
+        mutationFn: createPost,
         onSuccess: () => {},
         onError: (error) => {},
     });
@@ -141,7 +141,7 @@ export default function BoardWriter(props){
     // Event Handlers(Click Handlers)
     const onClickSubmit = () => {
         // writer에 값이 없으면 WriterError에 에러원인 저장
-        if(!writer){
+        if (!writer) {
             setWriterError("작성자를 입력해주세요.");
         }
         if (!password) {
@@ -169,7 +169,7 @@ export default function BoardWriter(props){
         };
 
         if (writer && password && title && contents) {
-            createMutation.mutate(newPost, {
+            createPostMutation.mutate(newPost, {
                 onSuccess: () => {
                     alert("게시물이 성공적으로 등록되었습니다.");
                     router.push(`http://localhost:3000/boards/list/${router.query.categoryName}/1`)

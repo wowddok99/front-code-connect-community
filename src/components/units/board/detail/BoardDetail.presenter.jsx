@@ -83,7 +83,9 @@ export default function BoardDetailUI(props){
                     <DeleteButton onClick={props.onClickDeletePost}>삭제</DeleteButton>
                 </CrudButtonGroupWrapper>
                 <CommentFormWrapper>
-                    <BoardCommentWrite/>
+                    <BoardCommentWrite
+                        postId={props.postId}
+                    />
                     {/* 댓글 추가 필요 */}
                 </CommentFormWrapper>
             </MainWrapper>
