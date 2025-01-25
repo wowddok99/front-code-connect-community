@@ -86,7 +86,7 @@ export default function BoardDetail(){
     };
 
     // UseQuery
-    const { data: fetchPostData, error, isLoading, refetch } = useQuery({
+    const { data: fetchPostData, error, isLoading } = useQuery({
         queryKey: ['fetchPostData', categoryName, postId],
         queryFn: fetchPost,
         enabled: !!categoryName && !!postId

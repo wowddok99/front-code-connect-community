@@ -100,6 +100,7 @@ export const CommentListWrapper = styled.div`
   display: flex;
   border-bottom: 0.0625rem solid #BDBDBD;
   padding-bottom: 0.9375rem;
+  margin-bottom: 1rem;
   gap: 1rem;
 `
 

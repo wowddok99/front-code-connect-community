@@ -27,11 +27,11 @@ export default function BoardCommentListUI(props){
     return (
         <CommentListFormWrapper>
             <InfiniteScroll
-                loadMore={() => props.loadMoreComments()}
+                loadMore={props.fetchNextPage}
                 hasMore={props.hasNextPage}
             >
                 {props.data?.pages.map((page, pageIndex) => (
-                    page.data?.comments?.map((comment) => (
+                    page?.data?.comments?.map((comment) => (
                     <CommentListWrapper>
                         <CommentProfileIcon src="/images/profile.png" />
                         <CommentInfoWrapper>
@@ -47,7 +47,6 @@ export default function BoardCommentListUI(props){
                             <CommentContent>{comment.contents}</CommentContent>
                             <CommentCreatedAt>{comment.createdAt}</CommentCreatedAt>
                         </CommentInfoWrapper>
-                        <div onClick={props.loadMoreComments}>123</div>
                     </CommentListWrapper>
                     ))
                 ))}
