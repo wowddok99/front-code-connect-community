@@ -1,10 +1,11 @@
 import { useRouter } from "next/router";
 import BoardCommentWriteUI from "./BoardCommentWrite.presenter";
 import { ChangeEvent, MouseEvent, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 
 export default function BoardCommentWrite(props) {
     const router = useRouter();
+    const queryClient = useQueryClient();
 
     // API 호출 함수
     const createComment = async (newComment) => {
@@ -61,7 +62,12 @@ export default function BoardCommentWrite(props) {
         if (commentAuthor && commentPassword && commentContent) {
             createCommentMutation.mutate(newComment, {
                 onSuccess: () => {
-                    alert("게시물이 성공적으로 등록되었습니다.");
+                    // 댓글 등록 성공시 댓글 리패치
+                    queryClient.invalidateQueries(['fetchCommentsData']);
+                    setCommentAuthor("")
+                    setCommentPassword("");
+                    setCommentContent("")
+                    setCommentContentLength(0);
                 },
                 onError: (error) => {
                     alert(error.message);
