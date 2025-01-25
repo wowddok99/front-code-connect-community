@@ -29,6 +29,7 @@ import {
     CommentFormWrapper
 } from "./BoardDetail.styles"
 import BoardCommentWrite from "@/src/components/units/board/comment/write/BoardCommentWrite.container";
+import BoardCommentList from "@/src/components/units/board/comment/list/BoardCommentList.container";
 
 export default function BoardDetailUI(props){
     return (
@@ -83,10 +84,9 @@ export default function BoardDetailUI(props){
                     <DeleteButton onClick={props.onClickDeletePost}>삭제</DeleteButton>
                 </CrudButtonGroupWrapper>
                 <CommentFormWrapper>
-                    <BoardCommentWrite
-                        postId={props.postId}
-                    />
-                    {/* 댓글 추가 필요 */}
+                    {/* 댓글 */}
+                    <BoardCommentWrite postId={props.postId}/>
+                    <BoardCommentList postId={props.postId}/>
                 </CommentFormWrapper>
             </MainWrapper>
         </PageLayout>

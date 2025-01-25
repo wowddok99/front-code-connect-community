@@ -35,7 +35,6 @@ export default function BoardDetail(){
         const response = await fetch(`http://localhost:8081/api/posts/${categoryName}/${postId}`);
 
         if (!response.ok) {
-            alert('API 응답이 올바르지 않습니다.');
             throw new Error('API 응답이 올바르지 않습니다.');
         }
         return response.json();
