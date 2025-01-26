@@ -48,7 +48,7 @@ export default function Pagination(props){
 
         // 페이지 이동
         router.push({
-            pathname: `/boards/list/${categoryName}/${(newPage - 10)}`,
+            pathname: `/boards/list/${categoryName}/${(startPage - 10)}`,
             query: {
                 title: router.query.title,
                 startDate: router.query.startDate === "" || router.query.startDate === undefined ? undefined : (router.query.startDate),
@@ -66,7 +66,7 @@ export default function Pagination(props){
 
             // 페이지 이동
             router.push({
-                pathname: `/boards/list/${categoryName}/${(newPage + 10)}`,
+                pathname: `/boards/list/${categoryName}/${(startPage + 10)}`,
                 query: {
                     title: router.query.title,
                     startDate: router.query.startDate === "" || router.query.startDate === undefined ? undefined : (router.query.startDate),
