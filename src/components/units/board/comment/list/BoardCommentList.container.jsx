@@ -1,6 +1,6 @@
 import BoardCommentListUI from "./BoardCommentList.presenter";
 import { useRouter } from "next/router";
-import {useInfiniteQuery, useMutation} from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
 export default function BoardCommentList(props){
@@ -12,7 +12,6 @@ export default function BoardCommentList(props){
     const [commentPassword, setCommentPassword] = useState("");
     const [commentContent, setCommentContent] = useState("");
     const [commentContentLength, setCommentContentLength] = useState(0);
-
 
     // API 요청 함수
     const fetchComments = async (pageNumber) => {
@@ -43,19 +42,27 @@ export default function BoardCommentList(props){
         return response.json();
     };
 
-    const deleteComment = async (commentId) => {
-        const response = await fetch(`http://localhost:8081/api/comments/${commentId}`, {
+    const deleteComment = async (params) => {
+        const response = await fetch(`http://localhost:8081/api/comments/${params.commentId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: params.commentDeletePassword
         });
 
+
         if (!response.ok) {
-            throw new Error('API 응답이 올바르지 않습니다.');
+            const errorData = await response.json();
+            throw new Error(`${response.status} Server Error : ${errorData.message || '알 수 없는 오류'}`);
         }
 
-        return response.json();
+        // 204 No Content에 대한 처리
+        if (response.status === 204) {
+            return; // 데이터가 없으므로 아무것도 반환하지 않음
+        }
+
+        return response.json(); // 다른 경우에만 JSON 반환
     };
 
 
@@ -101,6 +108,11 @@ export default function BoardCommentList(props){
         setCommentContentLength(event.target.value.length)
     }
 
+    const onInputCommentDeletePassword = (event) => {
+        setCommentDeletePassword(event.target.value);
+    }
+
+    // Event Handlers (Click Handlers)
     const onClickEditComment = (comment) => {
         setEditingCommentId(comment.id); // 수정할 댓글의 ID 설정
         setCommentContent(comment.contents); // 현재 댓글 내용으로 초기화
@@ -131,14 +143,20 @@ export default function BoardCommentList(props){
     };
 
     const onClickDeleteComment = (commentId) => {
-        deleteCommentMutation.mutate(commentId, {
-            onSuccess: () => {
-                refetch();
-            },
-            onError: (error) => {
-                alert(error.message);
-            }
-        });
+        // prompt로 비밀번호 입력 받음(임시로 사용)
+        const commentDeletePassword = prompt("댓글 삭제를 위한 비밀번호를 입력해주세요.");
+
+        // 비밀번호가 입력되었는지 체크
+        if (commentDeletePassword) {
+            deleteCommentMutation.mutate({ commentId, commentDeletePassword }, {
+                onSuccess: () => {
+                    refetch();
+                },
+                onError: (error) => {
+                    alert(error.message);
+                }
+            });
+        }
     };
 
     return (
@@ -147,14 +165,15 @@ export default function BoardCommentList(props){
                 data={data}
                 fetchNextPage={fetchNextPage}
                 hasNextPage={hasNextPage}
-
                 editingCommentId={editingCommentId}
+
                 commentContentLength={commentContentLength}
                 commentPassword={commentPassword}
                 commentContent={commentContent}
 
                 onInputCommentPassword={onInputCommentPassword}
                 onInputCommentContent={onInputCommentContent}
+                onInputCommentDeletePassword={onInputCommentDeletePassword}
 
                 onClickEditComment={onClickEditComment}
                 onClickSubmitEditedComment={onClickSubmitEditedComment}

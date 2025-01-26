@@ -20,7 +20,10 @@ import {
     CommentInputWrapper,
     CommentInputContent,
     CommentInputFooter,
-    CommentSubmitButton
+    CommentSubmitButton,
+    DeleteModal,
+    DeleteModalContent,
+    DeleteModalInput
 
 } from "./BoardCommentList.styles";
 
