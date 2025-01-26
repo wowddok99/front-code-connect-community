@@ -5,16 +5,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 export default function BoardDetail(){
     const router = useRouter();
-    const { categoryName: queryCategoryName, postId: queryPostId } = router.query;
-
-    useEffect(() => {
-        if (queryCategoryName) {
-            setCategoryName(queryCategoryName);
-        }
-        if (queryPostId) {
-            setPostId(Number(queryPostId));
-        }
-    }, [queryCategoryName, queryPostId]);
+    const { categoryName, postId } = router.query;
 
     useEffect(() => {
         setIsMounted(true);
@@ -22,9 +13,6 @@ export default function BoardDetail(){
 
     // State Variables
     const [isMounted, setIsMounted] = useState(false)
-    const [categoryName, setCategoryName] = useState(undefined);
-    const [postId, setPostId] = useState(undefined);
-
     const [likeCount, setLikeCount] = useState(0);
     const [dislikeCount, setDislikeCount] = useState(0);
     const [isYoutubePlayerError, setIsYoutubePlayerError] = useState(false);

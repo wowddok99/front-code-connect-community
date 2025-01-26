@@ -1,24 +1,11 @@
 import { useRouter } from "next/router"
 import BoardListUI from "./BoardList.presenter"
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function BoardList(){
     const router = useRouter();
-    const { categoryName: queryCategoryName, pageNumber: queryPageNumber } = router.query;
-
-    useEffect(() => {
-        if (queryCategoryName) {
-            setCategoryName(queryCategoryName);
-        }
-        if (queryPageNumber) {
-            setPageNumber(Number(queryPageNumber));
-        }
-    }, [queryCategoryName, queryPageNumber]);
-
-    // State Variables
-    const [categoryName, setCategoryName] = useState(queryCategoryName);
-    const [pageNumber, setPageNumber] = useState(queryPageNumber);
+    const { categoryName, pageNumber } = router.query;
 
     const [inputTitle, setInputTitle] = useState("");
     const [title, setTitle] = useState("");
@@ -30,7 +17,7 @@ export default function BoardList(){
 
     // API 요청 함수
     const fetchPosts = async () => {
-        // 백엔드의 startDate와 endDate는 LocalDateTime 타입이므로 형식을 변환
+        // 백엔드의 startDate와 endDate는 LocalDateTime 타입이므로 형식 변환
         const formattedStartDate = startDate === "" || startDate === undefined ? "" : `${startDate}T00:00:00`;
         const formattedEndDate = endDate === "" || endDate === undefined ? "" : `${endDate}T23:59:59`;
 
