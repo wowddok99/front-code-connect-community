@@ -158,3 +158,81 @@ export const CommentCreatedAt = styled.div`
   font-size: 0.75rem;
   color: #BDBDBDBD;
 `
+
+export const CommentEditFormWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`
+export const CommentInsertWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+`
+
+export const CommentInputHeaderWrapper = styled.div`
+  display: flex;
+  gap: 0.625rem;
+  align-items: center;
+`
+
+export const CommentInputWriter = styled.input`
+  width: 7.5rem;
+  height: 2.5rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  border: 0.0625rem solid #bdbdbd;
+  border-radius: 0.1875rem;
+`
+
+export const CommentInputPassword = styled.input`
+  width: 7.5rem;
+  height: 2.5rem;
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
+  border: 0.0625rem solid #bdbdbd;
+  border-radius: 0.1875rem;
+`
+export const CommentInputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+export const CommentInputContent = styled.input`
+  width: 100%;
+  height: 4.8125rem;
+  border: 0.0625rem solid #bdbdbd;
+  border-top-left-radius: 0.1875rem;
+  border-top-right-radius: 0.1875rem;
+  padding-left: 1.25rem;
+`
+
+export const CommentInputFooter = styled.div`
+  display: flex;
+  width: 100%;
+  height: 2.5rem;
+  border-bottom: 0.0625rem solid #bdbdbd;
+  border-left: 0.0625rem solid #bdbdbd;
+  border-right: 0.0625rem solid #bdbdbd;
+  border-bottom-left-radius: 0.1875rem;
+  border-bottom-right-radius: 0.1875rem;
+  padding-left: 1.25rem;
+  font-size: 0.75rem;
+  color: #888;
+  align-items: center;
+`
+
+export const CommentSubmitButton = styled.button`
+  position: absolute;
+  width: 5.6875rem;
+  height: 2.44rem;
+  margin-top: 4.8125rem;
+  margin-left: 62.7563rem;
+  border: none;
+  border-bottom-right-radius: 0.15rem;
+  font-size: 0.8125rem;
+  color: black;
+  background-color: #FFD600;
+  cursor: pointer;
+`

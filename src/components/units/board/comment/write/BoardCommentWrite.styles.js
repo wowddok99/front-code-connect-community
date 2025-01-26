@@ -89,11 +89,11 @@ export const CommentInputFooter = styled.div`
 export const CommentSubmitButton = styled.button`
   position: absolute;
   width: 5.6875rem;
-  height: 2.5rem;
+  height: 2.44rem;
   margin-top: 6.8125rem;
   margin-left: 62.7563rem;
   border: none;
-  border-bottom-right-radius: 0.1875rem;
+  border-bottom-right-radius: 0.15rem;
   font-size: 0.8125rem;
   color: white;
   background-color: black;
