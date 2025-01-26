@@ -35,6 +35,7 @@ export default function BoardCommentListUI(props){
                 {props.data?.pages.map((page, pageIndex) => (
                     page?.data?.comments?.map((comment) => (
                         props.editingCommentId === comment.id ? (
+                            // 댓글 수정
                             <CommentEditFormWrapper>
                                 <CommentInsertWrapper>
                                     <CommentInputHeaderWrapper>
@@ -59,7 +60,7 @@ export default function BoardCommentListUI(props){
                                         </WriterStarWrapper>
                                         <IconWrapper>
                                             <MdModeEditIcon onClick={() => props.onClickEditComment(comment)}/>
-                                            <MdClearIcon/>
+                                            <MdClearIcon onClick={() => props.onClickDeleteComment(comment.id)}/>
                                         </IconWrapper>
                                     </CommentHeaderWrapper>
                                     <CommentContent>{comment.contents}</CommentContent>

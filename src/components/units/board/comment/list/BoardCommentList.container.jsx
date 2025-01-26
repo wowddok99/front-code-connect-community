@@ -27,8 +27,6 @@ export default function BoardCommentList(props){
     };
 
     const updateComment = async (params) => {
-        console.log(params.commentId);
-        console.log(params.updatedComment)
         const response = await fetch(`http://localhost:8081/api/comments/${params.commentId}`, {
             method: 'PUT', // 또는 'PATCH'를 사용할 수 있습니다.
             headers: {
@@ -44,6 +42,22 @@ export default function BoardCommentList(props){
 
         return response.json();
     };
+
+    const deleteComment = async (commentId) => {
+        const response = await fetch(`http://localhost:8081/api/comments/${commentId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('API 응답이 올바르지 않습니다.');
+        }
+
+        return response.json();
+    };
+
 
     // UseInfiniteQuery
     const {
@@ -67,6 +81,12 @@ export default function BoardCommentList(props){
     // Mutation
     const updateCommentMutation = useMutation({
         mutationFn: updateComment,
+        onSuccess: () => {},
+        onError: (error) => {}
+    });
+
+    const deleteCommentMutation = useMutation({
+        mutationFn: deleteComment,
         onSuccess: () => {},
         onError: (error) => {}
     });
@@ -110,6 +130,17 @@ export default function BoardCommentList(props){
         }
     };
 
+    const onClickDeleteComment = (commentId) => {
+        deleteCommentMutation.mutate(commentId, {
+            onSuccess: () => {
+                refetch();
+            },
+            onError: (error) => {
+                alert(error.message);
+            }
+        });
+    };
+
     return (
         <div>
             <BoardCommentListUI
@@ -127,6 +158,7 @@ export default function BoardCommentList(props){
 
                 onClickEditComment={onClickEditComment}
                 onClickSubmitEditedComment={onClickSubmitEditedComment}
+                onClickDeleteComment={onClickDeleteComment}
             />
         </div>
     )
