@@ -1,7 +1,6 @@
 import BoardCommentListUI from "./BoardCommentList.presenter";
 import { useRouter } from "next/router";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export default function BoardCommentList(props){
     const router = useRouter();

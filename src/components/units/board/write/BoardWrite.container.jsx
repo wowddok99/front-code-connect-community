@@ -2,7 +2,7 @@ import BoardWriterUI from './BoardWrite.presenter'
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useMutation } from "@tanstack/react-query";
-import {checkValidationImageFile} from "@/src/components/units/commons/libraries/validationFile";
+import { checkValidationImageFile } from "@/src/components/units/commons/libraries/validationFile";
 
 export default function BoardWriter(props){
     const router = useRouter();
