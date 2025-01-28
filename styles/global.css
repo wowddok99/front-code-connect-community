@@ -1,33 +1,3 @@
-@font-face {
-    font-family: "NotoSansKR-Regular";
-    src: url("/font/NotoSansKR-Regular.ttf");
-}
-
-@font-face {
-    font-family: "NotoSansKR-Bold";
-    src: url("/font/NotoSansKR-Bold.ttf");
-}
-
-@font-face {
-    font-family: "NotoSansKR-ExtraLight";
-    src: url("/font/NotoSansKR-ExtraLight.ttf");
-}
-
-* {
-    font-family: 'NotoSansKR-Bold', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing : border-box;
-}
-
-/* button {
-    font-family: "NotoSansKR-Regular";
-}
-
-::placeholder {
-    font-family: "NotoSansKR-Regular";
-}
- 
-body {
-    font-family: 'NotoSansKR-Regular', sans-serif;
-} */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
