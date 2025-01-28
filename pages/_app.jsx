@@ -1,4 +1,3 @@
-// import '../styles/global.css'
 import { globalStyles } from '@/src/components/commons/styles/globalStyles';
 import { Global } from '@emotion/react';
 import LoadingProvider from '../src/components/commons/loading';
