@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { FaRegCommentDots } from "@react-icons/all-files/fa/FaRegCommentDots";
-import { IoMdStar } from "@react-icons/all-files/io/IoMdStar";
 
 export const CommentWriteFormWrapper = styled.div`
   display: flex;
