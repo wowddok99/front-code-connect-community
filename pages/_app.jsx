@@ -11,11 +11,10 @@ const queryClient = new QueryClient();
 export default function App({ Component, pageProps }) {
     const router = useRouter();
 
-    // 레이아웃을 적용하지 않을 경로 설정
-    const excludedLayoutPaths = ['/auth/login', `/auth/signUp`, '/auth/terms'];
-
-    // 현재 경로가 레이아웃을 적용하지 않을 경로인지 확인
-    const isExcludedLayout = excludedLayoutPaths.includes(router.pathname);
+    // 기본 레이아웃을 제외할 경로 목록
+    const excludedLayoutPaths = ['/auth'];
+    // 현재 경로가 제외 목록에 포함되는지 확인
+    const isExcludedLayout = excludedLayoutPaths.some(path => router.pathname.startsWith(path));
 
     // excludedLayoutPaths에 해당하는 경로에서만 global.css를 동적 임포트
     useEffect(() => {
