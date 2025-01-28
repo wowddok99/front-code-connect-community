@@ -129,7 +129,7 @@ export default function LayOutHeader(){
                 <Menu href="http://localhost:3000/boards/list/information/1">Information</Menu>
             </MenuWrapper>
             <LoginWrapper>
-                <LoginButton>로그인</LoginButton>
+                <LoginButton onClick={() => window.location.href='http://localhost:3000/auth/login'}>로그인</LoginButton>
                 <div>
                     <Tooltip placement="top" title={"ㅁㅁ님 환영합니다."}>
                         <FaUserIcon/>

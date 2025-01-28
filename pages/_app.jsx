@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }) {
     const router = useRouter();
 
     // 레이아웃을 적용하지 않을 경로 설정
-    const excludedLayoutPaths = ['/login', '/signUp'];
+    const excludedLayoutPaths = ['/auth/login', `/auth/signUp`, '/auth/terms'];
 
     // 현재 경로가 레이아웃을 적용하지 않을 경로인지 확인
     const isExcludedLayout = excludedLayoutPaths.includes(router.pathname);
