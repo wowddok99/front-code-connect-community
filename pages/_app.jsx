@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }) {
     const router = useRouter();
 
     // 기본 레이아웃을 제외할 경로 목록
-    const excludedLayoutPaths = ['/auth'];
+    const excludedLayoutPaths = ['/auth', '/admin'];
     // 현재 경로가 제외 목록에 포함되는지 확인
     const isExcludedLayout = excludedLayoutPaths.some(path => router.pathname.startsWith(path));
 

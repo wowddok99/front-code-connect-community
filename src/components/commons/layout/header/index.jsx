@@ -95,7 +95,7 @@ export default function LayOutHeader(){
         {
             key: '1',
             label: (
-                <a target="_blank" href="" style={{fontSize: "1rem"}}>
+                <a target="_self" href="http://localhost:3000/admin/dashboard" style={{fontSize: "1rem"}}>
                     설정
                 </a>
             ),
