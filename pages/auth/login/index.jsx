@@ -2,6 +2,7 @@ import { useState } from "react"
 import Link from "next/link"
 
 export default function LoginForm() {
+    // 로그인 폼 데이터 상태 정의
     const [formData, setFormData] = useState({
         userName: "",
         password: "",
