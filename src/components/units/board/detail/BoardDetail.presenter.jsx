@@ -40,8 +40,8 @@ export default function BoardDetailUI(props){
                         <InfoWrapper>
                             <ProfileIcon src="/images/profile.png" />
                             <WriterCreatedAtWrapper>
-                                <Writer>{props.fetchPostData?.data.writer}</Writer>
-                                <CreateAt>{props.fetchPostData?.data.createdAt}</CreateAt>
+                                <Writer>{props.fetchPostData?.writer}</Writer>
+                                <CreateAt>{props.fetchPostData?.createdAt}</CreateAt>
                             </WriterCreatedAtWrapper>
                         </InfoWrapper>
                         <CardHeaderLogoWrapper>
@@ -52,15 +52,15 @@ export default function BoardDetailUI(props){
                         </CardHeaderLogoWrapper>
                     </CardHeaderWrapper>
                     <CardMainWrapper>
-                        <Subject>{props.fetchPostData?.data.title}</Subject>
-                        {props.fetchPostData?.data.imagePathList.map((el)=> (
-                            <Image src={`http://localhost:3000/uploads/images/${el.split('\\').pop()}`} style={{ display: props.fetchPostData?.data.imagePathList[0] ? '' : 'none'}}></Image>
+                        <Subject>{props.fetchPostData?.title}</Subject>
+                        {props.fetchPostData?.imagePathList.map((el)=> (
+                            <Image src={`http://localhost:3000/uploads/images/${el.split('\\').pop()}`} style={{ display: props.fetchPostData?.imagePathList[0] ? '' : 'none'}}></Image>
                         ))}
                         {!props.isYoutubePlayerError && props.isMounted && (
                             <YoutubePlayerWrapper>
                                 <YoutubePlayer
-                                    url={props.fetchPostData?.data.youtubeUrl}
-                                    style={{display: props.fetchPostData?.data.youtubeUrl ? 'block' : 'none'}}
+                                    url={props.fetchPostData?.youtubeUrl}
+                                    style={{display: props.fetchPostData?.youtubeUrl ? 'block' : 'none'}}
                                     controls={true}
                                     onError={props.onErrorYoutubePlayer}
                                 />

@@ -74,7 +74,7 @@ export default function BoardDetail(){
     };
 
     // UseQuery
-    const { data: fetchPostData, error, isLoading } = useQuery({
+    const { data: fetchPostData, error, isLoading, refetch } = useQuery({
         queryKey: ['fetchPostData', categoryName, postId],
         queryFn: fetchPost,
         enabled: !!categoryName && !!postId
@@ -82,9 +82,9 @@ export default function BoardDetail(){
 
     useEffect(() => {
         if (fetchPostData) {
-            setLikeCount(fetchPostData.data?.likeCount);
-            setDislikeCount(fetchPostData.data?.dislikeCount);
-            const fullAddress = `(${fetchPostData.data?.postAddress?.zipcode}) ${fetchPostData.data?.postAddress?.address} ${fetchPostData.data?.postAddress?.addressDetail}`;
+            setLikeCount(fetchPostData?.likeCount);
+            setDislikeCount(fetchPostData?.dislikeCount);
+            const fullAddress = `(${fetchPostData?.postAddress?.zipcode}) ${fetchPostData?.postAddress?.address} ${fetchPostData?.postAddress?.addressDetail}`;
             setFullAddress(fullAddress);
         }
     }, [fetchPostData]);
