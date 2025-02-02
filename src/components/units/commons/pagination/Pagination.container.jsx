@@ -14,7 +14,7 @@ export default function Pagination(props){
     // Paging Management
     const [startPage, setStartPage] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
-    const lastPage = Math.ceil((props.fetchPostsData?.data?.totalElements ?? 10) / 10);
+    const lastPage = Math.ceil((props.fetchPostsData?.totalElements ?? 10) / 10);
 
 
     // Event Handlers (Click Handlers)

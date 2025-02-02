@@ -204,10 +204,9 @@ export default function BoardWriter(props){
         // 이미지 파일 업로드
         uploadImagesMutation.mutate(formData, {
             onSuccess: (response) => {
-                // console.log(response);
-                const fileName = response.data[0].split('\\').pop();
+                const fileName = response[0].split('\\').pop();
 
-                newImageFileUrls.push(response.data[0]);
+                newImageFileUrls.push(response[0]);
                 newImageFileNames.push(fileName);
 
                 setImageFileUrls(newImageFileUrls);

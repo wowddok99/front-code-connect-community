@@ -77,7 +77,7 @@ export default function BoardCommentList(props){
         queryFn: ({ pageParam = 1 }) => fetchComments(pageParam),
         initialPageParam: 1, // 처음 요청할 페이지 번호
         getNextPageParam: (lastPage, allPages) => {
-            return lastPage?.data?.comments?.length > 0 ? (lastPage?.data?.currentPage + 1) : undefined;
+            return lastPage?.comments?.length > 0 ? (lastPage?.currentPage + 1) : undefined;
         },
         enabled: !!postId, // postId가 있을 때만 쿼리 활성화
         onError: (error) => {

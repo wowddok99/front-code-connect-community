@@ -36,7 +36,7 @@ export default function BoardCommentListUI(props){
                 hasMore={props.hasNextPage}
             >
                 {props.data?.pages.map((page, pageIndex) => (
-                    page?.data?.comments?.map((comment) => (
+                    page.comments?.map((comment) => (
                         props.editingCommentId === comment.id ? (
                             // 댓글 수정
                             <CommentEditFormWrapper>
